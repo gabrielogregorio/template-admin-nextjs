@@ -6,20 +6,22 @@ type modoType =  'login' | 'cadastro'
 import useAuth from '../data/hook/useAuth'
 
 export default function autenticacao() {
-  const {usuario, loginGoogle} = useAuth()
+  const {login, cadastrar, loginGoogle} = useAuth()
   const [email, setEmail] = useState<string>('')
   const [senha, setSenha] = useState<string>('')
   const [erro, setErro] = useState<string>('')
   const [modo, setModo] = useState<modoType>('login')
 
-  console.log(usuario)
-  function submeter() {
-    if (modo == 'login') {
-      console.log('login')
-      showError("Sistema não está pronto ainda")
-    } else {
-      console.log('cadastrar')
-      showError("Sistema não está pronto ainda : Cadastro")
+
+  async function submeter() {
+    try {
+      if (modo == 'login') {
+        await login(email, senha)
+      } else {
+        await cadastrar(email, senha)
+      }  
+    } catch(e) {
+      showError(e?.message)
     }
   }
 
