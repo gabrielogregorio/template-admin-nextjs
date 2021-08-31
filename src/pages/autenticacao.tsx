@@ -1,31 +1,45 @@
 import AutenticacaoEntrada from '../components/auth/AutenticacaoEntrada'
 import { useState } from 'react'
+import ImagemAutenticacao from '../components/template/imagemAutenticacao'
+import ErrorMessage from '../components/ErrorMensage'
 type modoType =  'login' | 'cadastro'
-
+import useAuth from '../data/hook/useAuth'
 
 export default function autenticacao() {
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const {usuario, loginGoogle} = useAuth()
+  const [email, setEmail] = useState<string>('')
+  const [senha, setSenha] = useState<string>('')
+  const [erro, setErro] = useState<string>('')
   const [modo, setModo] = useState<modoType>('login')
 
+  console.log(usuario)
   function submeter() {
     if (modo == 'login') {
       console.log('login')
+      showError("Sistema não está pronto ainda")
     } else {
       console.log('cadastrar')
+      showError("Sistema não está pronto ainda : Cadastro")
     }
+  }
+
+  function showError(msg, seconds = 5) {
+    setErro(msg)
+    setTimeout(() => setErro(null), seconds * 1000)
   }
 
   // hidden md:block w-full => a partir de um dispositivo médio, exibe a imagem (block)
   return (
     <div className={`flex h-screen items-center justify-center`}>
-      <div className={`hidden md:block md:w-full lg:w-2/3`}>
-        <img src="/images/bg.jpg" alt="Imagem da tela de autenticação"  className={`w-full h-screen object-cover`}/>
-      </div>
+      <ImagemAutenticacao src="/images/bg.jpg" alt="Imagem da tela de autenticação" />
+
       <div className={` m-10 w-full md:w-1/2 lg:w-1/3`}>
         <h1 className={`text-2xl font-bold mb-5`}>
           {modo === 'login' ? 'Faça Login' : 'Crie uma conta'}
         </h1>
+
+        {erro ? <ErrorMessage msg={erro} /> : (false)}
+
         <AutenticacaoEntrada label="E-mail" value={email} type="email" onChange={setEmail}/>
         <AutenticacaoEntrada label="Senha" value={senha} type="password" onChange={setSenha}/>
 
@@ -35,7 +49,7 @@ export default function autenticacao() {
 
         <hr className={`my-6 border-gray-300 w-full`} />
 
-        <button onClick={submeter} className={`w-full bg-red-500 hover:bg-red-400 text-white rounded-lg px-4 py-3`}>
+        <button onClick={loginGoogle} className={`w-full bg-red-500 hover:bg-red-400 text-white rounded-lg px-4 py-3`}>
           {modo === 'login' ? 'Entrar Com o Google' : 'Cadastrar com o Google'}
         </button>
 

@@ -20,7 +20,6 @@ export function AppProvider(props) {
     } else {
       setTema('dark')
     }
-
   }
 
   return (
