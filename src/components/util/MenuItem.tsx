@@ -8,8 +8,8 @@ interface MenuItemProps {
   classData?:string
 }
 
-export default function MenuItem(props: MenuItemProps) {
 
+export default function MenuItem(props: MenuItemProps) {
   function renderContent() {
     return (
       <a className={`flex flex-col justify-center items-center h-20 w-full dark:text-gray-200 `}>
@@ -28,11 +28,8 @@ export default function MenuItem(props: MenuItemProps) {
         text-gray-600
         hover:bg-gray-300
         dark:hover:bg-gray-800
+        ${props.classData}`}>
 
-        ${props.classData}
-
- 
-        `}>
       {props.url ? (
         <Link href={props.url}>
           {renderContent()}
@@ -42,5 +39,4 @@ export default function MenuItem(props: MenuItemProps) {
       )}
     </li>
   )
-
 }

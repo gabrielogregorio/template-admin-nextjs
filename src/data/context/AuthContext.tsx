@@ -5,6 +5,7 @@ import router from 'next/router'
 import Cookies from 'js-cookie'
 import { useEffect } from 'react'
 
+
 interface AuthContextProps{
   usuario?: Usuario
   loginGoogle?: () => Promise<void>
@@ -14,15 +15,17 @@ interface AuthContextProps{
   logout?: () => Promise<void>
 }
 
+
 const AuthContext = createContext<AuthContextProps>({}) 
+
 
 async function usuarioNormalizado(usuarioFirebase: firebase.User): Promise<Usuario> {
   const token = await usuarioFirebase.getIdToken()
   return {
+    token,
     uid: usuarioFirebase.uid,
     nome: usuarioFirebase.displayName,
     email: usuarioFirebase.email,
-    token,
     provedor: usuarioFirebase.providerData[0].providerId,
     imageUrl: usuarioFirebase.photoURL
   }
@@ -36,8 +39,8 @@ function gerenciarCokie(logado) {
   } else {
     Cookies.remove('admin-cod3r-auth')
   }
-
 }
+
 
 export function AuthProvider(props) {
   const [usuario, setUsuario] = useState<Usuario>(null)
@@ -85,7 +88,6 @@ export function AuthProvider(props) {
   }
 
 
-  
   async function cadastrar(email, senha) {
     try {
       setCarregando(true)
@@ -97,8 +99,6 @@ export function AuthProvider(props) {
       setCarregando(false)
     }
   }
-
-
 
 
   async function logout() {
@@ -137,5 +137,6 @@ export function AuthProvider(props) {
     </AuthContext.Provider>
   )
 }
+
 
 export default AuthContext

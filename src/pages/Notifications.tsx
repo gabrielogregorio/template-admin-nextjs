@@ -1,12 +1,10 @@
 import Layout from "../components/template/Layout";
 
-export default function Notificacoes() {
 
+export default function Notifications() {
   return (
     <div className={``}>
-      <Layout
-        titulo="Notificações"
-        subtitulo="Gerenciamento de notificações" >
+      <Layout titulo="Notificações" subtitulo="Gerenciamento de notificações">
         <h3>Notificação</h3>
       </Layout>
     </div>

@@ -1,25 +1,22 @@
-import AutenticacaoEntrada from '../components/auth/AutenticacaoEntrada'
 import { useState } from 'react'
-import ImagemAutenticacao from '../components/template/imagemAutenticacao'
-import ErrorMessage from '../components/ErrorMensage'
-type modoType =  'login' | 'cadastro'
+import AuthInputProps from '../components/auth/AuthInputProps'
+import ProfileImage from '../components/util/ProfileImage'
+import ErrorMessage from '../components/util/ErrorMensage'
 import useAuth from '../data/hook/useAuth'
+import Button from '../components/util/Button'
+
 
 export default function autenticacao() {
   const {login, cadastrar, loginGoogle} = useAuth()
   const [email, setEmail] = useState<string>('')
   const [senha, setSenha] = useState<string>('')
   const [erro, setErro] = useState<string>('')
-  const [modo, setModo] = useState<modoType>('login')
-
+  const [modo, setModo] = useState<'login' | 'cadastro'>('login')
 
   async function submeter() {
     try {
-      if (modo == 'login') {
-        await login(email, senha)
-      } else {
-        await cadastrar(email, senha)
-      }  
+      if (modo == 'login') { await login(email, senha)}
+      else { await cadastrar(email, senha) }  
     } catch(e) {
       showError(e?.message)
     }
@@ -33,7 +30,7 @@ export default function autenticacao() {
   // hidden md:block w-full => a partir de um dispositivo médio, exibe a imagem (block)
   return (
     <div className={`flex h-screen items-center justify-center`}>
-      <ImagemAutenticacao src="/images/bg.jpg" alt="Imagem da tela de autenticação" />
+      <ProfileImage src="/images/bg.jpg" alt="Imagem da tela de autenticação" />
 
       <div className={` m-10 w-full md:w-1/2 lg:w-1/3`}>
         <h1 className={`text-2xl font-bold mb-5`}>
@@ -42,19 +39,15 @@ export default function autenticacao() {
 
         {erro ? <ErrorMessage msg={erro} /> : (false)}
 
-        <AutenticacaoEntrada label="E-mail" value={email} type="email" onChange={setEmail}/>
-        <AutenticacaoEntrada label="Senha" value={senha} type="password" onChange={setSenha}/>
+        <AuthInputProps label="E-mail" value={email} type="email" onChange={setEmail}/>
+        <AuthInputProps label="Senha" value={senha} type="password" onChange={setSenha}/>
 
-        <button onClick={submeter} className={`w-full bg-indigo-500 hover:bg-indigo-400 text-white rounded-lg px-4 py-3 mt-6`}>
-          {modo === 'login' ? 'Entrar' : 'Cadastrar'}
-        </button>
+        
+        <Button action={submeter} className={`bg-indigo-500 hover:bg-indigo-400`} text={modo === 'login' ? 'Entrar' : 'Cadastrar'} />
 
         <hr className={`my-6 border-gray-300 w-full`} />
 
-        <button onClick={loginGoogle} className={`w-full bg-red-500 hover:bg-red-400 text-white rounded-lg px-4 py-3`}>
-          {modo === 'login' ? 'Entrar Com o Google' : 'Cadastrar com o Google'}
-        </button>
-
+        <Button action={loginGoogle} className={`bg-red-500 hover:bg-red-400`} text={modo === 'login' ? 'Entrar Com o Google' : 'Cadastrar com o Google'}/>
 
         {modo === 'login' ? (
           <p className={`mt-8`}>

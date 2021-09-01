@@ -6,7 +6,6 @@ export default function Logo() {
         <div className={`h-3 w-3 rounded-full bg-yellow-500 mr-0.5`} ></div>
         <div className={`h-3 w-3 rounded-full bg-green-600 ml-0.5`} ></div>
       </div>
-
     </div>
   )
 }

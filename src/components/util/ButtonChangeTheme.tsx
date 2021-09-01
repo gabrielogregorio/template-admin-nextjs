@@ -1,12 +1,12 @@
 import { IconMoon, IconSun } from "../Icones"
 
-interface BotaoAlternarTemaProps {
+interface ButtonChangeThemeProps {
   tema: string
   alternarTema: () => void
 }
 
-export default function BotaoAlternarTema(props: BotaoAlternarTemaProps) {
 
+export default function ButtonChangeTheme(props: ButtonChangeThemeProps) {
   // hidden sm:flex => Será hidden, a partir de telas sm será flex
   // lg: Dispositivos de tela larga
   return props.tema === 'dark' ? (
@@ -38,10 +38,6 @@ export default function BotaoAlternarTema(props: BotaoAlternarTemaProps) {
       <div className={`flex items-center justify-center bg-black text-yellow-300 w-6 h-5 rounded-full`}>
         {IconMoon(4)}
       </div>
-
     </div>    
   )
 }
-
-
-
